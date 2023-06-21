@@ -10,9 +10,11 @@ import App from './App.vue'
 import store from "./store"
 import router from "./router"
 import PrimeVue from 'primevue/config';
+import Tooltip from 'primevue/tooltip';
 
 const app = createApp(App)
   .use(store)
   .use(router)
   .use(PrimeVue)
+  .directive('tooltip', Tooltip)
   .mount('#app')

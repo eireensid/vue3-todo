@@ -27,13 +27,23 @@ const store = createStore({
   },
   mutations: {
     addTodo(state, name) {
-      state.todos.push({key: String(state.todos.length), name, done: false})
+      state.todos.push({
+        key: String(state.todos.length),
+        name,
+        done: false
+      })
     },
+
     deleteTodo(state, todo) {
       state.todos.splice(state.todos.indexOf(todo), 1)
     },
-    editTodo(state, todo) {
 
+    editTodo(state, todo) {
+      state.todos.map(stateTodo => {
+        if (stateTodo.key === todo.key) {
+          stateTodo.name = todo.name
+        }
+      })
     }
   }
 })

@@ -9,10 +9,14 @@
       <div v-for="todo of todos" :key="todo.key" class="flex align-items-center justify-content-between mb-3">
         <div class="flex align-items-center gap-2">
           <Checkbox v-model="selectedTodos" :inputId="todo.key" name="todo" :value="todo.name" />
-          <label :for="todo.key">{{ todo.name }}</label>
+          <label v-if="!todo.isEdit" :for="todo.key">{{ todo.name }}</label>
+          <div v-else class="flex align-items-center gap-2">
+            <InputText type="text" v-model="todo.name" @keyup.enter="editTask(todo)" />
+            <Button icon="pi pi-check" aria-label="Отредактировано" severity="success" @click="editTask(todo)" />
+          </div>
         </div>
         <div class="flex align-items-center gap-2">
-          <Button icon="pi pi-file-edit" aria-label="Редактировать" />
+          <Button icon="pi pi-file-edit" aria-label="Редактировать" @click="clickEdit(todo)" />
           <Button icon="pi pi-times" aria-label="Удалить" severity="danger" @click="deleteTask(todo)" />
         </div>
       </div>
@@ -42,6 +46,17 @@
     store.commit('deleteTodo', task)
     saveToLocalTodos()
   }
+
+  const clickEdit = (todo) => {
+    todo.isEdit = true
+  }
+
+  const editTask = (todo) => {
+    todo.isEdit = false
+    store.commit('editTodo', todo)
+    saveToLocalTodos()
+  }
+
 </script>
 
 <style>
