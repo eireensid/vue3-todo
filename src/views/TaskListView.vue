@@ -3,8 +3,10 @@
     <h1>Список задач</h1>
     <div class="flex align-items-center gap-2">
       <div class="flex flex-column gap-2 relative">
-        <InputText class="task-list__input" id="add-task" v-model="addTodoValue" aria-describedby="add-task-help" @keyup.enter="addTask(addTodoValue)" />
-        <span class="absolute left-0 top-100 text-base text-red-500 py-1" v-show="store.getters.getTodoByName(addTodoValue)" id="add-task-help">Такая задача уже есть</span>
+        <InputText class="task-list__input" id="add-task" v-model="addTodoValue" aria-describedby="add-task-help"
+                   @keyup.enter="addTask(addTodoValue)" autocomplete="none" />
+        <span class="absolute left-0 top-100 text-base text-red-500 py-1" v-show="store.getters.getTodoByName(addTodoValue)"
+              id="add-task-help">Такая задача уже есть</span>
       </div>
       <Button class="task-list__button" type="button" label="Добавить" severity="success" icon="pi pi-plus"
               @click="addTask(addTodoValue)" :disabled="addTodoValue === '' || store.getters.getTodoByName(addTodoValue)" />
@@ -37,8 +39,8 @@
   import {useLocalStorage} from "../composables/useLocalStorage";
 
   const todos = store.state.todos
-  const addTodoValue = ref('')
-  const selectedTodos = ref([])
+  const addTodoValue = ref<string>('')
+  const selectedTodos = ref<Array<string>>([])
 
   const { saveToLocalTodos } = useLocalStorage()
 
@@ -62,8 +64,8 @@
     store.commit('filterTodo', todo)
   }
 
-  const deleteTask = (task) => {
-    store.commit('deleteTodo', task)
+  const deleteTask = (todo) => {
+    store.commit('deleteTodo', todo)
   }
 
   const clickEdit = (todo) => {

@@ -1,4 +1,5 @@
 import store from "../store";
+import {Todo} from "../types/todo";
 
 export const useLocalStorage = () => {
 
@@ -6,7 +7,7 @@ export const useLocalStorage = () => {
     localStorage.setItem('todos', JSON.stringify(store.state.todos))
   }
 
-  const getFromLocalTodos = () => {
+  const getFromLocalTodos = (): Todo[] => {
     return JSON.parse(localStorage.getItem('todos'))
   }
 

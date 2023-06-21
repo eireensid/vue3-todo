@@ -1,30 +1,12 @@
 import { createStore } from "vuex"
 import {useLocalStorage} from "../composables/useLocalStorage"
+import {initialState} from "../composables/initialState";
+import {setUniqueId} from "../composables/setUniqueId";
+import {Todo} from "../types/todo";
 
 const { getFromLocalTodos } = useLocalStorage()
 
-const initialState = [
-  {
-    key: Math.random().toString(16).slice(2),
-    name: 'Сделать тестовое задание',
-    done: false,
-    isEdit: false
-  },
-  {
-    key: Math.random().toString(16).slice(2),
-    name: 'Сходить на прогулку',
-    done: false,
-    isEdit: false
-  },
-  {
-    key: Math.random().toString(16).slice(2),
-    name: 'Искупать кота',
-    done: false,
-    isEdit: false
-  }
-]
-
-const todosInit = () => {
+const todosInit = (): Todo[] => {
   return getFromLocalTodos() && getFromLocalTodos().length > 0
     ? getFromLocalTodos() : initialState
 }
@@ -34,13 +16,13 @@ const store = createStore({
     todos: todosInit()
   },
   getters: {
-    getTodoByName: (state) => (value) => {
+    getTodoByName: (state) => (value: string): Todo | undefined => {
       return state.todos.find(todo => todo.name === value)
     },
-    getTodoByDone: (state) => {
+    getTodoByDone: (state): Array<string> => {
       const arr = []
       state.todos.filter(todo => {
-        if (todo.done === true) {
+        if (todo.done) {
           arr.push(todo.name)
         }
       })
@@ -56,14 +38,14 @@ const store = createStore({
 
     addTodo(state, name) {
       state.todos.push({
-        key: Math.random().toString(16).slice(2),
+        key: setUniqueId,
         name,
         done: false,
         isEdit: false
       })
     },
 
-    filterTodo(state, todo) {
+    filterTodo(state, todo: Todo) {
       state.todos.map(stateTodo => {
         if (stateTodo.key === todo.key) {
           stateTodo.done = !todo.done
@@ -71,11 +53,11 @@ const store = createStore({
       })
     },
 
-    deleteTodo(state, todo) {
+    deleteTodo(state, todo: Todo) {
       state.todos.splice(state.todos.indexOf(todo), 1)
     },
 
-    editTodo(state, todo) {
+    editTodo(state, todo: Todo) {
       state.todos.map(stateTodo => {
         if (stateTodo.key === todo.key) {
           stateTodo.name = todo.name
