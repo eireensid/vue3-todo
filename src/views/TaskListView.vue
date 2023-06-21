@@ -37,6 +37,7 @@
   import Checkbox from 'primevue/checkbox';
   import Button from 'primevue/button';
   import {useLocalStorage} from "../composables/useLocalStorage";
+import { Todo } from "../types/todo";
 
   const todos = store.state.todos
   const addTodoValue = ref<string>('')
@@ -53,26 +54,26 @@
     saveToLocalTodos()
   })
 
-  const addTask = (value) => {
+  const addTask = (value: string) => {
     if (!store.getters.getTodoByName(value)) {
       store.commit('addTodo', value)
       addTodoValue.value = ''
     }
   }
 
-  const toggleDone = (todo) => {
+  const toggleDone = (todo: Todo) => {
     store.commit('filterTodo', todo)
   }
 
-  const deleteTask = (todo) => {
+  const deleteTask = (todo: Todo) => {
     store.commit('deleteTodo', todo)
   }
 
-  const clickEdit = (todo) => {
+  const clickEdit = (todo: Todo) => {
     todo.isEdit = true
   }
 
-  const editTask = (todo) => {
+  const editTask = (todo: Todo) => {
     todo.isEdit = false
     store.commit('editTodo', todo)
   }

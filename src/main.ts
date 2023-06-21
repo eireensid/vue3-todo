@@ -12,12 +12,12 @@ import router from "./router"
 import PrimeVue from 'primevue/config';
 
 const app = createApp(App)
-  .use(store)
-  .use(router)
-  .use(PrimeVue)
-  .directive('focus', {
-    mounted(el) {
-      el.focus()
-    }
-  })
-  .mount('#app')
+app.use(store)
+app.use(router)
+app.use(PrimeVue)
+app.directive('focus', {
+  mounted(el) {
+    el.focus()
+  }
+})
+app.mount('#app')

@@ -17,11 +17,11 @@ const store = createStore({
   },
   getters: {
     getTodoByName: (state) => (value: string): Todo | undefined => {
-      return state.todos.find(todo => todo.name === value)
+      return state.todos.find((todo: Todo) => todo.name === value)
     },
     getTodoByDone: (state): Array<string> => {
-      const arr = []
-      state.todos.filter(todo => {
+      const arr: Array<string> = []
+      state.todos.filter((todo: Todo) => {
         if (todo.done) {
           arr.push(todo.name)
         }
@@ -31,12 +31,12 @@ const store = createStore({
   },
   mutations: {
     initTodos(state) {
-      state.todos.map(todo => {
+      state.todos.map((todo: Todo) => {
         todo.isEdit = false
       })
     },
 
-    addTodo(state, name) {
+    addTodo(state, name: string) {
       state.todos.push({
         key: setUniqueId,
         name,
@@ -46,7 +46,7 @@ const store = createStore({
     },
 
     filterTodo(state, todo: Todo) {
-      state.todos.map(stateTodo => {
+      state.todos.map((stateTodo: Todo) => {
         if (stateTodo.key === todo.key) {
           stateTodo.done = !todo.done
         }
@@ -58,7 +58,7 @@ const store = createStore({
     },
 
     editTodo(state, todo: Todo) {
-      state.todos.map(stateTodo => {
+      state.todos.map((stateTodo: Todo) => {
         if (stateTodo.key === todo.key) {
           stateTodo.name = todo.name
         }
