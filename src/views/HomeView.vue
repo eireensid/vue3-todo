@@ -1,5 +1,8 @@
 <template>
-  <main>
+  <section>
     <h1>Главная</h1>
-  </main>
+    <router-link :to="{ name: 'tasks' }">
+      Перейти к списку задач
+    </router-link>
+  </section>
 </template>
