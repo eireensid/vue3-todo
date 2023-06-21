@@ -1,5 +1,5 @@
 <template>
-  <section class="home">
+  <section class="section">
     <h1>Главная</h1>
     <router-link :to="{ name: 'tasks' }">
       Перейти к списку задач
@@ -7,8 +7,8 @@
   </section>
 </template>
 
-<style scoped>
-.home {
+<style>
+.section {
   height: calc(100vh - 4rem);
   display: flex;
   flex-direction: column;
