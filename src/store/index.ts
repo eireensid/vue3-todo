@@ -1,5 +1,5 @@
 import { createStore } from "vuex"
-import {useLocalStorage} from "../composables/useLocalStorage";
+import {useLocalStorage} from "../composables/useLocalStorage"
 
 const { getFromLocalTodos } = useLocalStorage()
 
@@ -28,7 +28,7 @@ const store = createStore({
   mutations: {
     addTodo(state, name) {
       state.todos.push({
-        key: `${name}-${state.todos.length}`,
+        key: Math.random().toString(16).slice(2),
         name,
         done: false
       })

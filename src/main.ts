@@ -17,4 +17,9 @@ const app = createApp(App)
   .use(router)
   .use(PrimeVue)
   .directive('tooltip', Tooltip)
+  .directive('focus', {
+    mounted(el) {
+      el.focus()
+    }
+  })
   .mount('#app')
