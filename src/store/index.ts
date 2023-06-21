@@ -5,36 +5,56 @@ const { getFromLocalTodos } = useLocalStorage()
 
 const initialState = [
   {
-    key: '0',
+    key: Math.random().toString(16).slice(2),
     name: 'Сделать тестовое задание',
-    done: false
+    done: false,
+    isEdit: false
   },
   {
-    key: '1',
+    key: Math.random().toString(16).slice(2),
     name: 'Сходить на прогулку',
-    done: false
+    done: false,
+    isEdit: false
   },
   {
-    key: '2',
+    key: Math.random().toString(16).slice(2),
     name: 'Искупать кота',
-    done: false
+    done: false,
+    isEdit: false
   }
 ]
 
+const todosInit = () => {
+  return getFromLocalTodos() && getFromLocalTodos().length > 0
+    ? getFromLocalTodos() : initialState
+}
+
 const store = createStore({
   state: {
-    todos: getFromLocalTodos() && getFromLocalTodos().length > 0 ? getFromLocalTodos() : initialState
+    todos: todosInit()
+  },
+  getters: {
+    getTodoByName: (state) => (value) => {
+      return state.todos.find(todo => todo.name === value)
+    }
   },
   mutations: {
+    initTodos(state) {
+      state.todos.map(todo => {
+        todo.isEdit = false
+      })
+    },
+
     addTodo(state, name) {
       state.todos.push({
         key: Math.random().toString(16).slice(2),
         name,
-        done: false
+        done: false,
+        isEdit: false
       })
     },
 
-    checkTodo(state, todo) {
+    filterTodo(state, todo) {
       state.todos.map(stateTodo => {
         if (stateTodo.key === todo.key) {
           stateTodo.done = !todo.done
