@@ -7,7 +7,7 @@
         <span class="absolute left-0 top-100 text-base text-red-500 py-1" v-show="store.getters.getTodoByName(addTodoValue)" id="add-task-help">Такая задача уже есть</span>
       </div>
       <Button class="task-list__button" type="button" label="Добавить" severity="success" icon="pi pi-plus"
-              @click="addTask(addTodoValue)" :disabled="addTodoValue === '' ? true : false" />
+              @click="addTask(addTodoValue)" :disabled="addTodoValue === '' || store.getters.getTodoByName(addTodoValue)" />
     </div>
     <div class="mt-5">
       <div v-for="todo of todos" :key="todo.key" class="flex align-items-center justify-content-between gap-4 mb-3">
@@ -44,12 +44,7 @@
 
   onMounted(() => {
     store.commit('initTodos')
-
-    store.state.todos.map((todo) => {
-      if (todo.done) {
-        selectedTodos.value.push(todo.name)
-      }
-    })
+    selectedTodos.value = store.getters.getTodoByDone
   })
 
   watch(store.state.todos, () => {

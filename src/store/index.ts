@@ -36,6 +36,15 @@ const store = createStore({
   getters: {
     getTodoByName: (state) => (value) => {
       return state.todos.find(todo => todo.name === value)
+    },
+    getTodoByDone: (state) => {
+      const arr = []
+      state.todos.filter(todo => {
+        if (todo.done === true) {
+          arr.push(todo.name)
+        }
+      })
+      return arr
     }
   },
   mutations: {
