@@ -23,14 +23,22 @@ const initialState = [
 
 const store = createStore({
   state: {
-    todos: getFromLocalTodos() || initialState
+    todos: getFromLocalTodos() && getFromLocalTodos().length > 0 ? getFromLocalTodos() : initialState
   },
   mutations: {
     addTodo(state, name) {
       state.todos.push({
-        key: String(state.todos.length),
+        key: `${name}-${state.todos.length}`,
         name,
         done: false
+      })
+    },
+
+    checkTodo(state, todo) {
+      state.todos.map(stateTodo => {
+        if (stateTodo.key === todo.key) {
+          stateTodo.done = !todo.done
+        }
       })
     },
 

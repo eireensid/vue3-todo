@@ -8,7 +8,7 @@
     <div class="mt-5">
       <div v-for="todo of todos" :key="todo.key" class="flex align-items-center justify-content-between mb-3">
         <div class="flex align-items-center gap-2">
-          <Checkbox v-model="selectedTodos" :inputId="todo.key" name="todo" :value="todo.name" />
+          <Checkbox v-model="todo.key" :inputId="todo.key" name="todo" :value="todo.name" @change="toggleDone(todo)" />
           <label v-if="!todo.isEdit" :for="todo.key">{{ todo.name }}</label>
           <div v-else class="flex align-items-center gap-2">
             <InputText type="text" v-model="todo.name" @keyup.enter="editTask(todo)" />
@@ -26,7 +26,7 @@
 
 <script lang="ts" setup>
   import store from "../store";
-  import {ref} from "vue";
+  import {ref, watch} from "vue";
   import InputText from 'primevue/inputtext';
   import Checkbox from 'primevue/checkbox';
   import Button from 'primevue/button';
@@ -35,10 +35,20 @@
   const todos = store.state.todos
   const addTodoValue = ref(null)
   const selectedTodos = ref([])
+
+  watch(selectedTodos, () => {
+    console.log('sel', selectedTodos.value)
+  })
   const { saveToLocalTodos } = useLocalStorage()
 
   const addTask = (value) => {
     store.commit('addTodo', value)
+    saveToLocalTodos()
+  }
+
+  const toggleDone = (todo) => {
+    store.commit('checkTodo', todo)
+    console.log('che', todo)
     saveToLocalTodos()
   }
 
