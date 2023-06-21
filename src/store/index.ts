@@ -1,8 +1,8 @@
 import { createStore } from "vuex"
 import {useLocalStorage} from "../composables/useLocalStorage"
 import {initialState} from "../composables/initialState";
-import {setUniqueId} from "../composables/setUniqueId";
 import {Todo} from "../types/todo";
+import { v4 as uuidv4 } from "uuid"
 
 const { getFromLocalTodos } = useLocalStorage()
 
@@ -38,7 +38,7 @@ const store = createStore({
 
     addTodo(state, name: string) {
       state.todos.push({
-        key: setUniqueId,
+        key: uuidv4(),
         name,
         done: false,
         isEdit: false
