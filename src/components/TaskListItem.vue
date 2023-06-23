@@ -13,7 +13,7 @@
 </template>
 
 <script lang="ts" setup>
-import {defineProps, ref} from "vue";
+import {ref} from "vue";
   import { Todo } from "../types/todo";
   import store from "../store";
 

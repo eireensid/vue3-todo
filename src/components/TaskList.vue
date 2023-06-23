@@ -14,7 +14,7 @@
 
 <script lang="ts" setup>
   import store from "../store";
-  import {onMounted, ref, watch} from "vue";
+  import {onMounted, watch} from "vue";
   import {useLocalStorage} from "../composables/useLocalStorage";
   import { Todo } from "../types/todo";
   import TaskListItem from "../components/TaskListItem.vue";
