@@ -11,13 +11,20 @@ import store from "./store"
 import router from "./router"
 import PrimeVue from 'primevue/config';
 
-const app = createApp(App)
-app.use(store)
-app.use(router)
-app.use(PrimeVue)
-app.directive('focus', {
-  mounted(el) {
-    el.focus()
-  }
-})
-app.mount('#app')
+import InputText from 'primevue/inputtext';
+import Checkbox from 'primevue/checkbox';
+import Button from 'primevue/button';
+
+createApp(App)
+  .use(store)
+  .use(router)
+  .use(PrimeVue)
+  .component('Button', Button)
+  .component('InputText', InputText)
+  .component('Checkbox', Checkbox)
+  .directive('focus', {
+    mounted(el) {
+      el.focus()
+    }
+  })
+  .mount('#app')

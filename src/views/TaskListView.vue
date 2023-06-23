@@ -1,16 +1,7 @@
 <template>
   <section>
     <h1>Список задач</h1>
-    <div class="flex align-items-center gap-2">
-      <div class="flex flex-column gap-2 relative">
-        <InputText class="task-list__input" id="add-task" v-model="newTodoValue" aria-describedby="add-task-help"
-                   @keyup.enter="addTask(newTodoValue)" autocomplete="none" />
-        <span class="absolute left-0 top-100 text-base text-red-500 py-1" v-show="store.getters.getTodoByName(newTodoValue) && newTodoValue !== ''"
-              id="add-task-help">Такая задача уже есть</span>
-      </div>
-      <Button class="task-list__button" type="button" label="Добавить" severity="success" icon="pi pi-plus"
-              @click="addTask(newTodoValue)" :disabled="newTodoValue === '' || store.getters.getTodoByName(newTodoValue)" />
-    </div>
+    <NewTaskForm/>
     <div class="mt-5">
       <div v-for="todo of todos" :key="todo.key" class="flex align-items-center justify-content-between gap-4 mb-3">
         <div class="flex align-items-center gap-2 w-full">
@@ -22,7 +13,8 @@
               <span class="absolute left-0 top-100 text-base text-red-500 py-1" v-show="todo.name === ''"
                     id="add-task-help">Задача не может быть пустой</span>
             </div>
-            <Button class="flex-shrink-0" icon="pi pi-check" aria-label="Отредактировано" severity="success" @click="editTask(todo)" />
+            <Button class="flex-shrink-0" icon="pi pi-check" aria-label="Отредактировано" severity="success" @click="editTask(todo)"
+                :disabled="todo.name === ''"/>
           </div>
         </div>
         <div class="flex align-items-center gap-2">
@@ -37,14 +29,11 @@
 <script lang="ts" setup>
   import store from "../store";
   import {onMounted, ref, watch} from "vue";
-  import InputText from 'primevue/inputtext';
-  import Checkbox from 'primevue/checkbox';
-  import Button from 'primevue/button';
   import {useLocalStorage} from "../composables/useLocalStorage";
-import { Todo } from "../types/todo";
+  import { Todo } from "../types/todo";
+  import NewTaskForm from "../components/NewTaskForm.vue";
 
   const todos = store.state.todos
-  const newTodoValue = ref<string>('')
   const selectedTodos = ref<Array<string>>([])
 
   const { saveToLocalTodos } = useLocalStorage()
@@ -57,13 +46,6 @@ import { Todo } from "../types/todo";
   watch(store.state.todos, () => {
     saveToLocalTodos()
   })
-
-  const addTask = (value: string) => {
-    if (!store.getters.getTodoByName(value) && value !== '') {
-      store.commit('addTodo', value)
-      newTodoValue.value = ''
-    }
-  }
 
   const toggleDone = (todo: Todo) => {
     store.commit('filterTodo', todo)
@@ -86,12 +68,3 @@ import { Todo } from "../types/todo";
   }
 
 </script>
-
-<style>
-.task-list__input {
-  width: 400px;
-}
-.task-list__button .p-button-icon {
-  padding-top: 2px;
-}
-</style>
