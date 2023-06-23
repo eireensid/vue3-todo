@@ -1,6 +1,6 @@
 export interface Todo {
-  key: string
-  name: string
-  done: boolean
-  isEdit: boolean
+	key: string
+	name: string
+	done: boolean
+	isEdit: boolean
 }

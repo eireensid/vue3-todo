@@ -1,12 +1,9 @@
-<script setup lang="ts">
-</script>
+<script setup lang="ts"></script>
 
 <template>
-  <main>
-    <router-view />
-  </main>
+	<main>
+		<router-view />
+	</main>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>
