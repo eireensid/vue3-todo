@@ -10,7 +10,7 @@
 				autocomplete="none" />
 			<span
 				class="absolute left-0 top-100 text-base text-red-500 py-1"
-				v-show="store.getters.getTodoByName(newTodoValue) && newTodoValue !== ''"
+				v-show="store.getters.getTodosByNameLength(newTodoValue) > 0 && newTodoValue !== ''"
 				id="add-task-help"
 				>Такая задача уже есть</span
 			>
@@ -21,7 +21,7 @@
 			label="Добавить"
 			severity="success"
 			icon="pi pi-plus"
-			:disabled="newTodoValue === '' || store.getters.getTodoByName(newTodoValue)" />
+			:disabled="newTodoValue === '' || store.getters.getTodosByNameLength(newTodoValue) > 0" />
 	</form>
 </template>
 
@@ -32,7 +32,7 @@ import { ref } from 'vue'
 const newTodoValue = ref<string>('')
 
 const addTask = (value: string) => {
-	if (!store.getters.getTodoByName(value) && value !== '') {
+	if (!store.getters.getTodosByNameLength(value) > 0 && value !== '') {
 		store.commit('addTodo', value)
 		newTodoValue.value = ''
 	}

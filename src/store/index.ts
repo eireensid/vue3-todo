@@ -15,10 +15,10 @@ const store = createStore({
 		todos: todosInit()
 	},
 	getters: {
-		getTodoByName:
+		getTodosByNameLength:
 			(state) =>
-			(value: string): Todo | undefined => {
-				return state.todos.find((todo: Todo) => todo.name === value)
+			(value: string): number => {
+				return state.todos.filter((todo: Todo) => todo.name === value).length
 			},
 		getTodoByDone: (state): Array<string> => {
 			const arr: Array<string> = []
