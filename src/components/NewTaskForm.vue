@@ -32,7 +32,7 @@ import { ref } from 'vue'
 const newTodoValue = ref<string>('')
 
 const addTask = (value: string) => {
-	if (!store.getters.getTodosByNameLength(value) > 0 && value !== '') {
+	if (store.getters.getTodosByNameLength(value) === 0 && value !== '') {
 		store.commit('addTodo', value)
 		newTodoValue.value = ''
 	}
